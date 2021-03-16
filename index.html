@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Citadel Server Documentation &mdash; Citadel Server 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex/" />
+    <link rel="search" title="Search" href="search/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> Citadel Server
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Citadel Server Documentation</a></li>
+<li><a class="reference internal" href="#core-modules">Core Modules</a><ul>
+<li><a class="reference internal" href="#main">Main</a></li>
+<li><a class="reference internal" href="#dependency-server-file">Dependency Server File</a></li>
+<li><a class="reference internal" href="#database-connection-file">Database Connection File</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#http-routers">HTTP Routers</a><ul>
+<li><a class="reference internal" href="#model-prediction-router">Model Prediction Router</a></li>
+<li><a class="reference internal" href="#dataset-and-training-router">Dataset and Training Router</a></li>
+<li><a class="reference internal" href="#authentication-router">Authentication Router</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#docker-redis-worker">Docker Redis Worker</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Citadel Server</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Citadel Server Documentation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="citadel-server-documentation">
+<h1>Citadel Server Documentation<a class="headerlink" href="#citadel-server-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>This server acts as the center of the entire Citadel stack. It coordinates the communication between the client,
+database, and all associated data and model microservices. Key features include a robust API, authentication and
+permissions, and a layer of abstraction between the actual training/prediction and the user.</p>
+</div>
+<div class="section" id="core-modules">
+<h1>Core Modules<a class="headerlink" href="#core-modules" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="main">
+<h2>Main<a class="headerlink" href="#main" title="Permalink to this headline">¶</a></h2>
+<p>The main file handles the startup/shutdown of the server and is the file directly associated with
+FastAPI. CORS requests and router registration is handled via this file.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The main.py file is only used for startup/shutdown and registering routers. No actual
+computation or logic takes place in this file.</p>
+</div>
+</div>
+<div class="section" id="dependency-server-file">
+<h2>Dependency Server File<a class="headerlink" href="#dependency-server-file" title="Permalink to this headline">¶</a></h2>
+<p>This file contains all of the shared objects used throughout the server. Ranging from Pydantic models to
+constants, it is the single location for objects that are used between modules or passed around frequently.</p>
+</div>
+<div class="section" id="database-connection-file">
+<h2>Database Connection File<a class="headerlink" href="#database-connection-file" title="Permalink to this headline">¶</a></h2>
+<p>This is the only file in the server that will make direct PyMongo calls to the server’s MongoDB instance. The
+collections referenced in here and the methods will execute pre-defined queries based on the various HTTP
+requests received by the server. No query is ever directly exposed to an endpoint or is directly accessible
+by a client.</p>
+</div>
+</div>
+<div class="section" id="http-routers">
+<h1>HTTP Routers<a class="headerlink" href="#http-routers" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="model-prediction-router">
+<h2>Model Prediction Router<a class="headerlink" href="#model-prediction-router" title="Permalink to this headline">¶</a></h2>
+<p>The model prediction router handles the connection between the server and model microservices. This allows
+for users to create training requests and view training results. Also, support for model registration and
+utilities are included in this file</p>
+</div>
+<div class="section" id="dataset-and-training-router">
+<h2>Dataset and Training Router<a class="headerlink" href="#dataset-and-training-router" title="Permalink to this headline">¶</a></h2>
+<p>The dataset and training router handles the connection and requests between the server and registered datasets.
+This includes the initial dataset registration, creating training requests, viewing training result statistics,
+and downloading trained model files.</p>
+</div>
+<div class="section" id="authentication-router">
+<h2>Authentication Router<a class="headerlink" href="#authentication-router" title="Permalink to this headline">¶</a></h2>
+<p>Authentication on the server is handled via API keys and OAuth2 Bearer Tokens. Almost all endpoints which interact
+with authentication and API keys are stored in this file, as well as the methods which act as helpers for OAuth2
+and role validation.</p>
+</div>
+</div>
+<div class="section" id="docker-redis-worker">
+<h1>Docker Redis Worker<a class="headerlink" href="#docker-redis-worker" title="Permalink to this headline">¶</a></h1>
+<p>Docker handles the integration of workers which interact with various redis-queues used by the server.
+There is almost no worker-specific code other than the worker.py file, as the workers receive a copy of all of
+the server files to interact with.</p>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex/"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex/"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search/"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Cody Richter.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
